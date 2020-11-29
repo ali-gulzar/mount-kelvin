@@ -30,9 +30,8 @@ export interface Device {
 }
 
 export interface Scence {
-    id: string;
-    state?: {
-        on: boolean;
-        bri: string;
-    };
+    siteKey: string;
+    data: {
+        id: string;
+    }
 }
