@@ -1,0 +1,1 @@
+export const scenes: Array<string> = ['allOn', 'allOn:70', 'allOn:30', 'allOff']

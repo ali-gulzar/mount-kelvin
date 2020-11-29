@@ -40,7 +40,9 @@ const App: React.FC = () => {
   const renderDisplay = () => (
     <div>
       <p>{siteName}</p>
-      {scenes.map(scene => <SceneButton key={scene} id={scene} siteKey={SITE_KEY} applySceneFunction={setScene}/>)}
+      <div className="sceneButtons">
+        {scenes.map(scene => <SceneButton key={scene} id={scene} siteKey={SITE_KEY} applySceneFunction={setScene}/>)}
+      </div>
     </div>
   )
 

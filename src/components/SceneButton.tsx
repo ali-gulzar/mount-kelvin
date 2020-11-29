@@ -9,12 +9,12 @@ interface props {
 
 const SceneButton: React.FC<props> = ({ id, siteKey, applySceneFunction }) => {
 
-    // let brightness;
-    // if (id.includes(':')) {
-    //     brightness = id.split(':')[1]
-    // } else {
-    //     brightness = id
-    // }
+    let brightness;
+    if (id.includes(':')) {
+        brightness = id.split(':')[1]
+    } else {
+        brightness = id
+    }
 
     const scene: Scence = {
         siteKey,
@@ -23,24 +23,10 @@ const SceneButton: React.FC<props> = ({ id, siteKey, applySceneFunction }) => {
         }
     }
 
-    const button = {
-        width: 100,
-        height: 100,
-        borderRadius: 5,
-        borderStyle: 'solid',
-        borderWidth: 2,
-        borderColor: 'pink'
-    }
-
-    const circle = {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-    }
-
     return (
-        <div style={button} onClick={() => applySceneFunction(scene)}>
-            <div style={circle} className="circle"/>
+        <div className="button" onClick={() => applySceneFunction(scene)}>
+            <div className="circle"/>
+            <p className="sceneValue">{brightness}</p>
         </div>
     )
 }
