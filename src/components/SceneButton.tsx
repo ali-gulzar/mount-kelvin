@@ -22,6 +22,12 @@ border-style: solid;
 border-color: aliceblue;
 position: relative;
 overflow: hidden;
+@media (max-width: 900px) {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-top: 20px;
+}
 &:after {
     ${({height}) => {
         if (height !== 0) return 'content: "";'
@@ -50,6 +56,10 @@ const Square = styled.div`
     padding-top: 10px;
     border-color: aliceblue;
     color: aliceblue;
+    @media (max-width: 900px) {
+        width: 200px;
+        height: 200px;
+    }
 `
 
 const SceneButton: React.FC<props> = ({ scene, siteKey, applySceneFunction }) => {
