@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import * as io from 'socket.io-client';
+
 import { Scence } from './types';
 import SceneButton from './components/SceneButton';
+import Loading from './components/Loading';
 
 const SITE_KEY = 'needed-endurable-plough'
 
@@ -37,7 +39,7 @@ const App: React.FC = () => {
     console.log(scence)
   };
 
-  const renderDisplay = () => (
+  const display = () => (
     <div>
       <p className="siteName">{siteName}</p>
       <div className="sceneButtons">
@@ -47,8 +49,8 @@ const App: React.FC = () => {
   )
 
   return (
-    <div className="body">
-      {loading ? <p>loading...</p> : renderDisplay()}
+    <div>
+      {loading ? <Loading /> : display()}
     </div>
   );
 }
