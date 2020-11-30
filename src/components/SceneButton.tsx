@@ -17,8 +17,9 @@ interface SampleProps {
 const Circle = styled.div<SampleProps>`
 width: 50px;
 height: 50px;
-border-radius: 25px;
-border:1px solid black;
+border-radius: 30px;
+border-style: solid;
+border-color: aliceblue;
 position: relative;
 overflow: hidden;
 &:after {
@@ -26,8 +27,8 @@ overflow: hidden;
         if (height !== 0) return 'content: "";'
     }}
     position:absolute;
-    background:black;
-    border:1px solid black;
+    background:aliceblue;
+    border:1px solid aliceblue;
     bottom:0;
     left:0; 
     right: 0;
@@ -47,6 +48,8 @@ const Square = styled.div`
     flex-direction: column;
     align-items: center;
     padding-top: 10px;
+    border-color: aliceblue;
+    color: aliceblue;
 `
 
 const SceneButton: React.FC<props> = ({ scene, siteKey, applySceneFunction }) => {

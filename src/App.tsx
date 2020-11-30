@@ -39,7 +39,7 @@ const App: React.FC = () => {
 
   const renderDisplay = () => (
     <div>
-      <p>{siteName}</p>
+      <p className="siteName">{siteName}</p>
       <div className="sceneButtons">
         {scenes.map(scene => <SceneButton key={scene} scene={scene} siteKey={SITE_KEY} applySceneFunction={setScene}/>)}
       </div>
@@ -47,7 +47,7 @@ const App: React.FC = () => {
   )
 
   return (
-    <div>
+    <div className="body">
       {loading ? <p>loading...</p> : renderDisplay()}
     </div>
   );
