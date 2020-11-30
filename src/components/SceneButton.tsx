@@ -1,32 +1,28 @@
 import React from 'react';
 import { Scence } from '../types';
+import { getBrightness } from '../helpers';
 
 interface props {
-    id: string;
+    scene: string;
     siteKey: string;
     applySceneFunction: (scene: Scence) => void 
 }
 
-const SceneButton: React.FC<props> = ({ id, siteKey, applySceneFunction }) => {
+const SceneButton: React.FC<props> = ({ scene, siteKey, applySceneFunction }) => {
 
-    let brightness;
-    if (id.includes(':')) {
-        brightness = id.split(':')[1]
-    } else {
-        brightness = id
-    }
+    const { brightness, brightnessText } = getBrightness(scene)
 
-    const scene: Scence = {
+    const sceneValue: Scence = {
         siteKey,
         data: {
-            id
+            id: scene
         }
     }
 
     return (
-        <div className="button" onClick={() => applySceneFunction(scene)}>
+        <div className="button" onClick={() => applySceneFunction(sceneValue)}>
             <div className="circle"/>
-            <p className="sceneValue">{brightness}</p>
+            <p className="sceneText">{brightnessText}</p>
         </div>
     )
 }

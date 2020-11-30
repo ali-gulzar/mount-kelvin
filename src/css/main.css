@@ -24,7 +24,6 @@
     border:1px solid black;
     position: relative;
     overflow: hidden;
-    display: block;
 }
 
 .circle:after {
@@ -36,8 +35,4 @@
     left:0; 
     right: 0;
     height:20%;
-}
-
-.sceneValue {
-    display: block;
 }
