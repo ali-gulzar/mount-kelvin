@@ -7,14 +7,19 @@ import { getBrightness } from '../helpers';
 interface props {
     scene: string;
     siteKey: string;
-    applySceneFunction: (scene: Scence) => void 
+    activated: boolean;
+    applySceneFunction: (scene: Scence, sceneKey: string) => void 
 }
 
-interface SampleProps {
+interface CircleProps {
     height: number
 }
 
-const Circle = styled.div<SampleProps>`
+interface SquareProps {
+    activated: boolean
+}
+
+const Circle = styled.div<CircleProps>`
 width: 50px;
 height: 50px;
 border-radius: 30px;
@@ -42,7 +47,7 @@ overflow: hidden;
 }
 `
 
-const Square = styled.div`
+const Square = styled.div<SquareProps>`
     width:100px;
     height:100px;
     border:1px solid black;
@@ -54,7 +59,7 @@ const Square = styled.div`
     flex-direction: column;
     align-items: center;
     padding-top: 10px;
-    border-color: aliceblue;
+    border-color: ${({activated}) => activated ? 'aliceblue' : 'gray'};
     color: aliceblue;
     @media (max-width: 900px) {
         width: 200px;
@@ -62,8 +67,7 @@ const Square = styled.div`
     }
 `
 
-const SceneButton: React.FC<props> = ({ scene, siteKey, applySceneFunction }) => {
-
+const SceneButton: React.FC<props> = ({ scene, siteKey, applySceneFunction, activated }) => {
 
     const { brightness, brightnessText } = getBrightness(scene)
 
@@ -75,7 +79,7 @@ const SceneButton: React.FC<props> = ({ scene, siteKey, applySceneFunction }) =>
     }
 
     return (
-        <Square onClick={() => applySceneFunction(sceneValue)}>
+        <Square onClick={() => applySceneFunction(sceneValue, scene)} activated={activated}>
             <Circle height={brightness}/>
             <p className="sceneText">{brightnessText}</p>
         </Square>

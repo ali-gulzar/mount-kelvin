@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import * as io from 'socket.io-client';
 
-import { Scence } from './types';
+import { Scence, ActivatedScene } from './types';
 import SceneButton from './components/SceneButton';
 import Loading from './components/Loading';
 
@@ -22,35 +22,43 @@ const App: React.FC = () => {
 
   const [siteName, setSiteName] = React.useState(''); 
   const [loading, setLoading] = React.useState(true);
-  const scenes: Array<string> = ['allOn', 'allOn:70', 'allOn:30', 'allOff']
+  const [activatedScene, setActivatedScenes] = React.useState<ActivatedScene>({
+    'allOn': false,
+    'allOn:70': false,
+    'allOn:30': false,
+    'allOff': false
+  })
 
-  const fetchSiteName = async () => {
-    setLoading(true);
-    const response = await axios.get(`https://api.mountkelvin.com/v1/site/${SITE_KEY}`)
-    setSiteName(response.data.name)
-    setLoading(false)
+  const defaultScenes: ActivatedScene = {
+    'allOn': false,
+    'allOn:70': false,
+    'allOn:30': false,
+    'allOff': false
   }
 
   React.useEffect(() => {
     setLoading(true)
+    const fetchSiteName = async () => {
+      setLoading(true);
+      const response = await axios.get(`https://api.mountkelvin.com/v1/site/${SITE_KEY}`)
+      setSiteName(response.data.name)
+      setLoading(false)
+    }
     fetchSiteName()
   },[])
 
-  const setScene = async (scence: Scence) => {
+  const setScene = async (scence: Scence, sceneKey: string) => {
     socket.on('siteKeyFound', () => {
       socket.emit('apply/scene', scence)
     })
-    socket.on('noSuchSiteKey', () => {
-      console.log('Unable to connect to the web socket')
-    })
-    console.log(scence)
+    setActivatedScenes({...defaultScenes, [sceneKey]: true})
   };
 
   const display = () => (
     <div>
       <p className="siteName">{siteName}</p>
       <div className="sceneButtons">
-        {scenes.map(scene => <SceneButton key={scene} scene={scene} siteKey={SITE_KEY} applySceneFunction={setScene}/>)}
+        {Object.keys(activatedScene).map(scene => <SceneButton key={scene} scene={scene} siteKey={SITE_KEY} activated={activatedScene[scene]} applySceneFunction={setScene}/>)}
       </div>
     </div>
   )

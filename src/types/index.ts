@@ -35,3 +35,7 @@ export interface Scence {
         id: string;
     }
 }
+
+export interface ActivatedScene {
+    [key: string]: boolean
+}
