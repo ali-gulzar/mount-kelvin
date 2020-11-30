@@ -8,33 +8,32 @@ import Loading from './components/Loading';
 
 const SITE_KEY = 'needed-endurable-plough'
 
+const socket = io.connect('https://api.mountkelvin.com/', {
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 3000,
+      transports: ['websocket'],
+    })
+
+socket.on('connect', () => {
+    socket.emit('subscribe', { siteKey: SITE_KEY })
+}) 
+
 const App: React.FC = () => {
 
   const [siteName, setSiteName] = React.useState(''); 
   const [loading, setLoading] = React.useState(true);
   const scenes: Array<string> = ['allOn', 'allOn:70', 'allOn:30', 'allOff']
 
-  let socket: SocketIOClient.Socket;
-
-  const fetchSiteNameAndConnectToWebSocket = async () => {
+  const fetchSiteName = async () => {
     setLoading(true);
     const response = await axios.get(`https://api.mountkelvin.com/v1/site/${SITE_KEY}`)
-    socket =  io.connect('https://api.mountkelvin.com/', {
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 3000,
-      transports: ['websocket'],
-    })
-
-    socket.on('connect', () => {
-        socket.emit('subscribe', { siteKey: SITE_KEY })
-        setLoading(false)
-    }) 
     setSiteName(response.data.name)
+    setLoading(false)
   }
 
   React.useEffect(() => {
     setLoading(true)
-    fetchSiteNameAndConnectToWebSocket()
+    fetchSiteName()
   },[])
 
   const setScene = async (scence: Scence) => {
@@ -42,8 +41,7 @@ const App: React.FC = () => {
       socket.emit('apply/scene', scence)
     })
     socket.on('noSuchSiteKey', () => {
-      fetchSiteNameAndConnectToWebSocket()
-      socket.emit('apply/scene', scence)
+      console.log('Unable to connect to the web socket')
     })
     console.log(scence)
   };
