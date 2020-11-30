@@ -2,37 +2,3 @@
     display: flex;
     justify-content: center;
 }
-
-.button {
-    width:100px;
-    height:100px;
-    border:1px solid black;
-    border-radius: 5px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10px;
-}
-
-.circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    border:1px solid black;
-    position: relative;
-    overflow: hidden;
-}
-
-.circle:after {
-    content:'\A';
-    position:absolute;
-    background:black;
-    border:1px solid black;
-    bottom:0;
-    left:0; 
-    right: 0;
-    height:20%;
-}
